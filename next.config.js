@@ -1,6 +1,20 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const moduleExports = {
   reactStrictMode: true,
+  webpack: (config) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    config.module.rules.push({
+      test: /\.(graphql|gql)$/,
+      exclude: /node_modules/,
+      loader: 'graphql-tag/loader',
+    })
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return config
+  },
 }
 
-module.exports = nextConfig
+module.exports = moduleExports

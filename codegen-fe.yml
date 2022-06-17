@@ -1,0 +1,13 @@
+overwrite: true
+schema: ${API_URL}/graphql
+documents: 'src/graphql/**/*.graphql'
+generates:
+  src/generated/generated-graphql.ts:
+    config:
+      strictScalars: true
+      scalars:
+        Date: string
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'
