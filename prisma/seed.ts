@@ -18,6 +18,7 @@ main()
     console.error('seed error:', e)
     process.exit(1)
   })
-  .finally(() => {
-    void Prisma.$disconnect()
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
+  .finally(async () => {
+    await Prisma.$disconnect()
   })
