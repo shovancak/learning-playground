@@ -14,14 +14,9 @@ export type Scalars = {
   Float: number;
 };
 
-export type Hello = {
-  __typename?: 'Hello';
-  hello: Scalars['String'];
-};
-
 export type Query = {
   __typename?: 'Query';
-  hello?: Maybe<Hello>;
+  hello: Scalars['String'];
 };
 
 
@@ -100,7 +95,6 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
-  Hello: ResolverTypeWrapper<Hello>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
 }>;
@@ -108,22 +102,15 @@ export type ResolversTypes = ResolversObject<{
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
   Boolean: Scalars['Boolean'];
-  Hello: Hello;
   Query: {};
   String: Scalars['String'];
 }>;
 
-export type HelloResolvers<ContextType = any, ParentType extends ResolversParentTypes['Hello'] = ResolversParentTypes['Hello']> = ResolversObject<{
-  hello?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
-
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
-  hello?: Resolver<Maybe<ResolversTypes['Hello']>, ParentType, ContextType, RequireFields<QueryHelloArgs, 'name'>>;
+  hello?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<QueryHelloArgs, 'name'>>;
 }>;
 
 export type Resolvers<ContextType = any> = ResolversObject<{
-  Hello?: HelloResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
 }>;
 
