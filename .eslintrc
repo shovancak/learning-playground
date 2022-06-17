@@ -58,6 +58,13 @@
       }
     ],
     "arrow-body-style": ["error", "as-needed"],
-    "react/jsx-key": ["error"]
+    "react/jsx-key": ["error"],
+    "react/function-component-definition": [
+      2,
+      {
+        "namedComponents": "arrow-function",
+        "unnamedComponents": "arrow-function"
+      }
+    ]
   }
 }
