@@ -9,5 +9,8 @@
       "pattern": "./"
     }
   ],
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
+  },
   "typescript.tsdk": "node_modules/typescript/lib"
 }
