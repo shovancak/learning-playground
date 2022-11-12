@@ -1,8 +1,10 @@
 overwrite: true
-schema: "src/api/typeDefs/*.graphql"
+schema: 'src/api/typeDefs/*.graphql'
 generates:
   src/api/generated/resolvers-types.ts:
     config:
+      enumValues:
+        Role: '@prisma/client#Role'
       useIndexSignature: true
     plugins:
       - typescript

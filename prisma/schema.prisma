@@ -11,15 +11,18 @@ datasource db {
 }
 
 model User {
-  id             Int              @id @default(autoincrement())
+  id             String           @id @default(cuid())
+  firebaseId     String           @unique @map(name: "firebase_id")
   name           String
   email          String           @unique
-  imageUrl       String?
+  imageUrl       String?          @map(name: "image_url")
   role           Role             @default(USER)
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @default(now())
+  createdAt      DateTime         @default(now()) @map(name: "created_at")
+  updatedAt      DateTime         @updatedAt @map(name: "updated_at")
   Course         Course[]
   CourseAttendee CourseAttendee[]
+
+  @@map(name: "user")
 }
 
 enum Role {
@@ -29,18 +32,21 @@ enum Role {
 }
 
 model Course {
-  id             Int              @id @default(autoincrement())
-  owner          User             @relation(fields: [ownerId], references: [id])
-  ownerId        Int
-  name           String           @unique
-  description    String?
-  category       CourseCategory
-  status         CourseStatus
-  attendeeLimit  Int
-  imageUrl       String?
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @default(now())
+  id            String         @id @default(cuid())
+  userId        String         @map(name: "user_id")
+  name          String         @unique
+  category      CourseCategory
+  status        CourseStatus
+  description   String?
+  attendeeLimit Int            @map(name: "attendee_limit")
+  imageUrl      String?        @map(name: "image_url")
+  createdAt     DateTime       @default(now()) @map(name: "created_at")
+  updatedAt     DateTime       @updatedAt @map(name: "updated_at")
+
   CourseAttendee CourseAttendee[]
+  user           User             @relation(fields: [userId], references: [id])
+
+  @@map(name: "course")
 }
 
 enum CourseCategory {
@@ -56,11 +62,14 @@ enum CourseStatus {
 }
 
 model CourseAttendee {
-  id         Int      @id @default(autoincrement())
-  attendee   User     @relation(fields: [attendeeId], references: [id])
-  attendeeId Int
-  course     Course   @relation(fields: [courseId], references: [id])
-  courseId   Int
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @default(now())
+  id        String   @id @default(cuid())
+  userId    String
+  courseId  String   @map(name: "course_id")
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @updatedAt @map(name: "updated_at")
+
+  user   User   @relation(fields: [userId], references: [id])
+  course Course @relation(fields: [courseId], references: [id])
+
+  @@map(name: "course_attendee")
 }
