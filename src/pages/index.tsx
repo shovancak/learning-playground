@@ -39,7 +39,7 @@ const LandingPage: NextPage = () => {
               void router.push(Routes.SignUp())
             }}
           >
-            SignUp
+            Sign up
           </Button>
           <Button
             w="full"
