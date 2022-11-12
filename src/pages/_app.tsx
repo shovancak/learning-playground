@@ -1,3 +1,4 @@
+import { ChakraProvider } from '@chakra-ui/react'
 import type { AppProps } from 'next/app'
 import ApolloProvider from 'providers/Apollo'
 import UserAuthProvider from 'providers/User'
@@ -5,7 +6,9 @@ import UserAuthProvider from 'providers/User'
 const MyApp = ({ Component, pageProps }: AppProps) => (
   <ApolloProvider>
     <UserAuthProvider>
-      <Component {...pageProps} />
+      <ChakraProvider>
+        <Component {...pageProps} />
+      </ChakraProvider>
     </UserAuthProvider>
   </ApolloProvider>
 )
