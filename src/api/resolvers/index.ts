@@ -1,5 +1,4 @@
 import { mergeResolvers } from '@graphql-tools/merge'
-import hello from './hello/hello'
-import user from './user/user'
+import UserResolvers from './UserResolvers'
 
-export default mergeResolvers([hello, user])
+export default mergeResolvers([UserResolvers])

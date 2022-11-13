@@ -29,13 +29,7 @@ export type MutationSignUpArgs = {
 
 export type Query = {
   __typename?: 'Query';
-  hello: Scalars['String'];
   me: User;
-};
-
-
-export type QueryHelloArgs = {
-  name?: InputMaybe<Scalars['String']>;
 };
 
 export { Role };
@@ -161,7 +155,6 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 }>;
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
-  hello?: Resolver<ResolversTypes['String'], ParentType, ContextType, Partial<QueryHelloArgs>>;
   me?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
 }>;
 

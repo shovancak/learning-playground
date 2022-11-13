@@ -1,14 +1,10 @@
 import { SignUpInput } from 'api/generated/resolvers-types'
+import { UserRepository } from 'api/repositories'
 import { firebaseAdminClient } from 'api/utils/firebaseAdmin'
-import { PrismaClient } from 'api/utils/prismaClient'
 
 export const signUp = async (input: SignUpInput) => {
   const { email, name, password, role } = input
-  const user = await PrismaClient.user.findUnique({
-    where: {
-      email,
-    },
-  })
+  const user = await UserRepository.getUserByEmail(email)
 
   // TODO: error handling
   if (user) {
@@ -18,13 +14,11 @@ export const signUp = async (input: SignUpInput) => {
     email,
     password,
   })
-  const newUser = await PrismaClient.user.create({
-    data: {
-      name,
-      email,
-      role,
-      firebaseId: uid,
-    },
+  const newUser = await UserRepository.createUser({
+    email,
+    name,
+    role,
+    firebaseId: uid,
   })
 
   return newUser

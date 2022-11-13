@@ -1,6 +1,5 @@
 import { mergeTypeDefs } from '@graphql-tools/merge'
-import date from './date.graphql'
-import hello from './hello.graphql'
-import user from './user.graphql'
+import Date from './date.graphql'
+import User from './user.graphql'
 
-export default mergeTypeDefs([hello, user, date])
+export default mergeTypeDefs([User, Date])
