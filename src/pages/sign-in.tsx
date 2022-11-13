@@ -13,7 +13,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { Routes } from 'constants/routes'
 import { FormInput } from 'components/FormInput'
-import { useAuth } from 'providers/User'
+import { useAuth } from 'providers/UserProvider'
 
 type FormValues = {
   email: string

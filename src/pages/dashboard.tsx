@@ -1,7 +1,7 @@
 import { Button, Flex, Spinner, Text, VStack } from '@chakra-ui/react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { useAuth } from 'providers/User'
+import { useAuth } from 'providers/UserProvider'
 
 const Dashboard: NextPage = () => {
   const { userData, logOut, isLoading } = useAuth()

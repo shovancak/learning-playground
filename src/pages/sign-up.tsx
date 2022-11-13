@@ -15,7 +15,7 @@ import { useRouter } from 'next/router'
 import { Routes } from 'constants/routes'
 import { FormInput } from 'components/FormInput'
 import { FormSelect } from 'components/FormSelect'
-import { useAuth } from 'providers/User'
+import { useAuth } from 'providers/UserProvider'
 
 const RoleLabel = {
   [Role.User]: 'User',
