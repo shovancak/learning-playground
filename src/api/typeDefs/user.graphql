@@ -1,0 +1,31 @@
+enum Role {
+  USER
+  COURSE_OWNER
+  ADMIN
+}
+
+type User {
+  id: ID!
+  firebaseId: String!
+  name: String!
+  email: String!
+  imageUrl: String
+  role: Role!
+  createdAt: Date!
+  updatedAt: Date
+}
+
+input SignUpInput {
+  name: String!
+  email: String!
+  password: String!
+  role: Role!
+}
+
+type Query {
+  me: User!
+}
+
+type Mutation {
+  signUp(input: SignUpInput!): User!
+}

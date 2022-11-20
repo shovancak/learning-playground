@@ -6,6 +6,18 @@
     "@sudolabs-io/eslint-config-sudolabs/with/lodash"
   ],
   "rules": {
+    "@typescript-eslint/no-misused-promises": [
+      "error",
+      {
+        "checksVoidReturn": {
+          "arguments": false,
+          "attributes": false,
+          "properties": false,
+          "returns": false,
+          "variables": false
+        }
+      }
+    ],
     "@typescript-eslint/naming-convention": [
       "error",
       {

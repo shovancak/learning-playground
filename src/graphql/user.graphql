@@ -1,0 +1,22 @@
+fragment UserInfo on User {
+  id
+  firebaseId
+  name
+  email
+  imageUrl
+  role
+  createdAt
+  updatedAt
+}
+
+query Me {
+  me {
+    ...UserInfo
+  }
+}
+
+mutation SignUp($input: SignUpInput!) {
+  signUp(input: $input) {
+    ...UserInfo
+  }
+}
