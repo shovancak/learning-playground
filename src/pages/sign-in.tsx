@@ -8,39 +8,48 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react'
+import { yupResolver } from '@hookform/resolvers/yup'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import * as yup from 'yup'
 import { Routes } from 'constants/routes'
 import { FormInput } from 'components/FormInput'
 import { useAuth } from 'providers/UserProvider'
 
-type FormValues = {
-  email: string
-  password: string
+enum FieldName {
+  Email = 'email',
+  Password = 'password',
 }
+
+type FormValues = {
+  [FieldName.Email]: string
+  [FieldName.Password]: string
+}
+
+const FormValidationSchema = yup.object({
+  [FieldName.Email]: yup.string().email().required(),
+  [FieldName.Password]: yup.string().min(6).required(),
+})
 
 const SignIn: NextPage = () => {
   // TODO: unify names createuser/login, signin/login
   const { logIn } = useAuth()
   const router = useRouter()
-  // TODO: add proper form handling + validation
   const formMethods = useForm<FormValues>({
     defaultValues: {
-      email: '',
-      password: '',
+      [FieldName.Email]: '',
+      [FieldName.Password]: '',
     },
+    resolver: yupResolver(FormValidationSchema),
   })
 
   const handleSignIn = async (formData: FormValues) => {
     const { email, password } = formData
-    // TODO: replace by form validation
-    if (email && password) {
-      await logIn({
-        email,
-        password,
-      })
-    }
+    await logIn({
+      email,
+      password,
+    })
   }
 
   return (

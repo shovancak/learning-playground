@@ -8,10 +8,12 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react'
+import { yupResolver } from '@hookform/resolvers/yup'
 import { Role } from 'generated/generated-graphql'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import * as yup from 'yup'
 import { Routes } from 'constants/routes'
 import { FormInput } from 'components/FormInput'
 import { FormSelect } from 'components/FormSelect'
@@ -23,38 +25,50 @@ const RoleLabel = {
   [Role.Admin]: 'Admin',
 }
 
-type FormValues = {
-  email: string
-  name: string
-  role: Role | undefined
-  password: string
+enum FieldName {
+  Email = 'email',
+  Name = 'name',
+  UserRole = 'userRole',
+  Password = 'password',
 }
+
+type FormValues = {
+  [FieldName.Email]: string
+  [FieldName.Name]: string
+  [FieldName.UserRole]?: Role
+  [FieldName.Password]: string
+}
+
+const FormValidationSchema = yup.object({
+  [FieldName.Email]: yup.string().email().required(),
+  [FieldName.Name]: yup.string().required(),
+  [FieldName.UserRole]: yup.string().oneOf(Object.keys(RoleLabel)).required(),
+  [FieldName.Password]: yup.string().min(6).required(),
+})
 
 const SignUp: NextPage = () => {
   // TODO: unify names createuser/login, signin/login
   const { createUser } = useAuth()
   const router = useRouter()
-  // TODO: add proper form handling + validation
   const formMethods = useForm<FormValues>({
     defaultValues: {
-      email: '',
-      name: '',
-      role: undefined,
-      password: '',
+      [FieldName.Email]: '',
+      [FieldName.Name]: '',
+      [FieldName.UserRole]: undefined,
+      [FieldName.Password]: '',
     },
+    resolver: yupResolver(FormValidationSchema),
   })
 
   const handleSignUp = async (formData: FormValues) => {
-    const { email, name, password, role } = formData
-    // TODO: replace by form validation
-    if (email && name && password && role) {
-      await createUser({
-        email,
-        name,
-        password,
-        role,
-      })
-    }
+    const typedFormValues = formData as Required<FormValues>
+    const { email, name, password, userRole } = typedFormValues
+    await createUser({
+      email,
+      name,
+      password,
+      role: userRole,
+    })
   }
 
   const roleOptions = Object.values(Role)
