@@ -2,7 +2,10 @@ import { AuthGraphqlContext } from 'api'
 import { MutationSignUpArgs, Resolvers } from 'api/generated/resolvers-types'
 import { UserService } from 'api/services'
 
-const UserResolvers: Resolvers = {
+const UserResolver: Resolvers = {
+  User: {
+    imageUrl: (user) => UserService.getImageUrl(user.imageBucketKey ?? null),
+  },
   Query: {
     me: (_, __, { user }: AuthGraphqlContext) =>
       UserService.getUserById(user.id),
@@ -12,4 +15,4 @@ const UserResolvers: Resolvers = {
   },
 }
 
-export default UserResolvers
+export default UserResolver

@@ -11,18 +11,18 @@ datasource db {
 }
 
 model User {
-  id             String           @id @default(cuid())
-  firebaseId     String           @unique @map(name: "firebase_id")
+  id             String  @id @default(cuid())
+  firebaseId     String  @unique
   name           String
-  email          String           @unique
-  imageUrl       String?          @map(name: "image_url")
-  role           Role             @default(USER)
-  createdAt      DateTime         @default(now()) @map(name: "created_at")
-  updatedAt      DateTime         @updatedAt @map(name: "updated_at")
+  email          String  @unique
+  imageBucketKey String?
+  role           Role    @default(USER)
+
   Course         Course[]
   CourseAttendee CourseAttendee[]
 
-  @@map(name: "user")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum Role {
@@ -32,21 +32,20 @@ enum Role {
 }
 
 model Course {
-  id            String         @id @default(cuid())
-  userId        String         @map(name: "user_id")
-  name          String         @unique
-  category      CourseCategory
-  status        CourseStatus
-  description   String?
-  attendeeLimit Int            @map(name: "attendee_limit")
-  imageUrl      String?        @map(name: "image_url")
-  createdAt     DateTime       @default(now()) @map(name: "created_at")
-  updatedAt     DateTime       @updatedAt @map(name: "updated_at")
+  id             String         @id @default(cuid())
+  userId         String
+  name           String         @unique
+  category       CourseCategory
+  status         CourseStatus
+  description    String?
+  attendeeLimit  Int
+  imageBucketKey String?
 
   CourseAttendee CourseAttendee[]
   user           User             @relation(fields: [userId], references: [id])
 
-  @@map(name: "course")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum CourseCategory {
@@ -62,14 +61,13 @@ enum CourseStatus {
 }
 
 model CourseAttendee {
-  id        String   @id @default(cuid())
-  userId    String
-  courseId  String   @map(name: "course_id")
-  createdAt DateTime @default(now()) @map(name: "created_at")
-  updatedAt DateTime @updatedAt @map(name: "updated_at")
+  id       String @id @default(cuid())
+  userId   String
+  courseId String
 
   user   User   @relation(fields: [userId], references: [id])
   course Course @relation(fields: [courseId], references: [id])
 
-  @@map(name: "course_attendee")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

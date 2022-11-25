@@ -50,25 +50,25 @@ export type User = {
   email: Scalars['String'];
   firebaseId: Scalars['String'];
   id: Scalars['ID'];
-  imageUrl?: Maybe<Scalars['String']>;
+  imageBucketKey?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   role: Role;
   updatedAt?: Maybe<Scalars['Date']>;
 };
 
-export type UserInfoFragment = { __typename?: 'User', id: string, firebaseId: string, name: string, email: string, imageUrl?: string | null, role: Role, createdAt: string, updatedAt?: string | null };
+export type UserInfoFragment = { __typename?: 'User', id: string, firebaseId: string, name: string, email: string, imageBucketKey?: string | null, role: Role, createdAt: string, updatedAt?: string | null };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, firebaseId: string, name: string, email: string, imageUrl?: string | null, role: Role, createdAt: string, updatedAt?: string | null } };
+export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, firebaseId: string, name: string, email: string, imageBucketKey?: string | null, role: Role, createdAt: string, updatedAt?: string | null } };
 
 export type SignUpMutationVariables = Exact<{
   input: SignUpInput;
 }>;
 
 
-export type SignUpMutation = { __typename?: 'Mutation', signUp: { __typename?: 'User', id: string, firebaseId: string, name: string, email: string, imageUrl?: string | null, role: Role, createdAt: string, updatedAt?: string | null } };
+export type SignUpMutation = { __typename?: 'Mutation', signUp: { __typename?: 'User', id: string, firebaseId: string, name: string, email: string, imageBucketKey?: string | null, role: Role, createdAt: string, updatedAt?: string | null } };
 
 export const UserInfoFragmentDoc = gql`
     fragment UserInfo on User {
@@ -76,7 +76,7 @@ export const UserInfoFragmentDoc = gql`
   firebaseId
   name
   email
-  imageUrl
+  imageBucketKey
   role
   createdAt
   updatedAt

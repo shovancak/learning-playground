@@ -1,4 +1,5 @@
 import { mergeResolvers } from '@graphql-tools/merge'
-import UserResolvers from './UserResolvers'
+import ImageResolver from './ImageResolver'
+import UserResolver from './UserResolver'
 
-export default mergeResolvers([UserResolvers])
+export default mergeResolvers([UserResolver, ImageResolver])

@@ -1,7 +1,6 @@
 import { Button, Flex, Spinner, Text, VStack } from '@chakra-ui/react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { ImageUploader } from 'components/ImageUploader'
 import { useAuth } from 'providers/UserProvider'
 
 const Dashboard: NextPage = () => {
@@ -54,11 +53,6 @@ const Dashboard: NextPage = () => {
             </Button>
           </VStack>
         </Flex>
-        <ImageUploader
-          onSuccess={(files) => {
-            console.log('files', files)
-          }}
-        />
       </Flex>
     </>
   )

@@ -3,7 +3,7 @@ fragment UserInfo on User {
   firebaseId
   name
   email
-  imageUrl
+  imageBucketKey
   role
   createdAt
   updatedAt

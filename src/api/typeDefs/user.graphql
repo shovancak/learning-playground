@@ -9,10 +9,11 @@ type User {
   firebaseId: String!
   name: String!
   email: String!
-  imageUrl: String
+  imageBucketKey: String
   role: Role!
   createdAt: Date!
   updatedAt: Date
+  imageUrl: String
 }
 
 input SignUpInput {
@@ -22,10 +23,15 @@ input SignUpInput {
   role: Role!
 }
 
+input AddUserImageInput {
+  bucketKey: String!
+}
+
 type Query {
   me: User!
 }
 
 type Mutation {
   signUp(input: SignUpInput!): User!
+  addUserImage(input: AddUserImageInput!): User!
 }
