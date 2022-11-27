@@ -11,7 +11,7 @@ export const firebaseAdminClient =
   firebase.initializeApp({
     credential: firebase.credential.cert({
       clientEmail: process.env.NEXT_PUBLIC_FIREBASE_CLIENT_EMAIL,
-      privateKey: process.env.NEXT_PUBLIC_FIREBASE_PRIVATE_KEY!.replace(
+      privateKey: process.env.NEXT_PUBLIC_FIREBASE_PRIVATE_KEY.replace(
         /\\n/g,
         '\n'
       ),

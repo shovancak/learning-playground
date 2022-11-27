@@ -1,0 +1,6 @@
+mutation GenerateUploadUrl {
+  generateUploadUrl {
+    signedUploadUrl
+    bucketKey
+  }
+}

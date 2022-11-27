@@ -17,9 +17,27 @@ export type Scalars = {
   Date: any;
 };
 
+export type AddUserImageInput = {
+  bucketKey: Scalars['String'];
+};
+
+export type ImageUploadUrl = {
+  __typename?: 'ImageUploadUrl';
+  bucketKey: Scalars['String'];
+  signedUploadUrl: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
+  addUserImage: User;
+  generateUploadUrl: ImageUploadUrl;
+  removeUserImage: User;
   signUp: User;
+};
+
+
+export type MutationAddUserImageArgs = {
+  input: AddUserImageInput;
 };
 
 
@@ -30,6 +48,10 @@ export type MutationSignUpArgs = {
 export type Query = {
   __typename?: 'Query';
   me: User;
+};
+
+export type RemoveUserImageInput = {
+  bucketKey: Scalars['String'];
 };
 
 export { Role };
@@ -47,6 +69,7 @@ export type User = {
   email: Scalars['String'];
   firebaseId: Scalars['String'];
   id: Scalars['ID'];
+  imageBucketKey?: Maybe<Scalars['String']>;
   imageUrl?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   role: Role;
@@ -123,11 +146,14 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
+  AddUserImageInput: AddUserImageInput;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Date: ResolverTypeWrapper<Scalars['Date']>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
+  ImageUploadUrl: ResolverTypeWrapper<ImageUploadUrl>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
+  RemoveUserImageInput: RemoveUserImageInput;
   Role: Role;
   SignUpInput: SignUpInput;
   String: ResolverTypeWrapper<Scalars['String']>;
@@ -136,11 +162,14 @@ export type ResolversTypes = ResolversObject<{
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
+  AddUserImageInput: AddUserImageInput;
   Boolean: Scalars['Boolean'];
   Date: Scalars['Date'];
   ID: Scalars['ID'];
+  ImageUploadUrl: ImageUploadUrl;
   Mutation: {};
   Query: {};
+  RemoveUserImageInput: RemoveUserImageInput;
   SignUpInput: SignUpInput;
   String: Scalars['String'];
   User: User;
@@ -150,7 +179,16 @@ export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
   name: 'Date';
 }
 
+export type ImageUploadUrlResolvers<ContextType = any, ParentType extends ResolversParentTypes['ImageUploadUrl'] = ResolversParentTypes['ImageUploadUrl']> = ResolversObject<{
+  bucketKey?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  signedUploadUrl?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
+  addUserImage?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationAddUserImageArgs, 'input'>>;
+  generateUploadUrl?: Resolver<ResolversTypes['ImageUploadUrl'], ParentType, ContextType>;
+  removeUserImage?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   signUp?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationSignUpArgs, 'input'>>;
 }>;
 
@@ -165,6 +203,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   firebaseId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  imageBucketKey?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   imageUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   role?: Resolver<ResolversTypes['Role'], ParentType, ContextType>;
@@ -174,6 +213,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 
 export type Resolvers<ContextType = any> = ResolversObject<{
   Date?: GraphQLScalarType;
+  ImageUploadUrl?: ImageUploadUrlResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Role?: RoleResolvers;
