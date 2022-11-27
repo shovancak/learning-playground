@@ -2,7 +2,7 @@ import { Resolvers } from 'api/generated/resolvers-types'
 import { ImageService } from 'api/services'
 
 const ImageResolver: Resolvers = {
-  Query: {
+  Mutation: {
     generateUploadUrl: () => ImageService.generateUploadUrl(),
   },
 }

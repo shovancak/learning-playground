@@ -27,6 +27,10 @@ input AddUserImageInput {
   bucketKey: String!
 }
 
+input RemoveUserImageInput {
+  bucketKey: String!
+}
+
 type Query {
   me: User!
 }
@@ -34,4 +38,5 @@ type Query {
 type Mutation {
   signUp(input: SignUpInput!): User!
   addUserImage(input: AddUserImageInput!): User!
+  removeUserImage: User!
 }

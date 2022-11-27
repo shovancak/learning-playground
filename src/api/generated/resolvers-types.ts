@@ -30,6 +30,8 @@ export type ImageUploadUrl = {
 export type Mutation = {
   __typename?: 'Mutation';
   addUserImage: User;
+  generateUploadUrl: ImageUploadUrl;
+  removeUserImage: User;
   signUp: User;
 };
 
@@ -45,8 +47,11 @@ export type MutationSignUpArgs = {
 
 export type Query = {
   __typename?: 'Query';
-  generateUploadUrl: ImageUploadUrl;
   me: User;
+};
+
+export type RemoveUserImageInput = {
+  bucketKey: Scalars['String'];
 };
 
 export { Role };
@@ -148,6 +153,7 @@ export type ResolversTypes = ResolversObject<{
   ImageUploadUrl: ResolverTypeWrapper<ImageUploadUrl>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
+  RemoveUserImageInput: RemoveUserImageInput;
   Role: Role;
   SignUpInput: SignUpInput;
   String: ResolverTypeWrapper<Scalars['String']>;
@@ -163,6 +169,7 @@ export type ResolversParentTypes = ResolversObject<{
   ImageUploadUrl: ImageUploadUrl;
   Mutation: {};
   Query: {};
+  RemoveUserImageInput: RemoveUserImageInput;
   SignUpInput: SignUpInput;
   String: Scalars['String'];
   User: User;
@@ -180,11 +187,12 @@ export type ImageUploadUrlResolvers<ContextType = any, ParentType extends Resolv
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   addUserImage?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationAddUserImageArgs, 'input'>>;
+  generateUploadUrl?: Resolver<ResolversTypes['ImageUploadUrl'], ParentType, ContextType>;
+  removeUserImage?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   signUp?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationSignUpArgs, 'input'>>;
 }>;
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
-  generateUploadUrl?: Resolver<ResolversTypes['ImageUploadUrl'], ParentType, ContextType>;
   me?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
 }>;
 

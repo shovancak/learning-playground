@@ -3,6 +3,6 @@ type ImageUploadUrl {
   bucketKey: String!
 }
 
-type Query {
+type Mutation {
   generateUploadUrl: ImageUploadUrl!
 }
