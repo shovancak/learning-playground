@@ -7,6 +7,7 @@ fragment UserInfo on User {
   role
   createdAt
   updatedAt
+  imageUrl
 }
 
 query Me {
@@ -17,6 +18,18 @@ query Me {
 
 mutation SignUp($input: SignUpInput!) {
   signUp(input: $input) {
+    ...UserInfo
+  }
+}
+
+mutation AddUserImage($input: AddUserImageInput!) {
+  addUserImage(input: $input) {
+    ...UserInfo
+  }
+}
+
+mutation RemoveUserImage {
+  removeUserImage {
     ...UserInfo
   }
 }

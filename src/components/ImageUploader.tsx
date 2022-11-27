@@ -2,18 +2,26 @@ import React from 'react'
 import { useDropzone } from 'react-dropzone'
 import { Button, Flex, Text } from '@chakra-ui/react'
 
+const MAX_SIZE_IN_BYTES = 2000000
+
 interface ImageUploaderProps {
   onSuccess: (file: File) => void
+  isDisabled: boolean
 }
 
-export const ImageUploader = ({ onSuccess }: ImageUploaderProps) => {
+export const ImageUploader = ({
+  onSuccess,
+  isDisabled,
+}: ImageUploaderProps) => {
   const { open, getRootProps, isDragActive } = useDropzone({
     accept: {
       'image/*': ['.jpeg', '.jpg', '.png'],
     },
     maxFiles: 1,
+    maxSize: MAX_SIZE_IN_BYTES,
     multiple: false,
     noClick: true,
+    disabled: isDisabled,
     onDropAccepted: (files: File[]) => {
       onSuccess(files[0])
     },
@@ -40,7 +48,7 @@ export const ImageUploader = ({ onSuccess }: ImageUploaderProps) => {
       <Text>
         Drag &apos;n&apos; drop image here, or select image from files
       </Text>
-      <Button colorScheme="messenger" onClick={open}>
+      <Button colorScheme="messenger" onClick={open} isDisabled={isDisabled}>
         Select image
       </Button>
     </Flex>

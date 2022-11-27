@@ -1,15 +1,36 @@
 import { useState } from 'react'
-import { Avatar, Button, Flex, Spinner, Text } from '@chakra-ui/react'
+import { RiCloseFill } from 'react-icons/ri'
+import {
+  Avatar,
+  Button,
+  Flex,
+  HStack,
+  IconButton,
+  Spinner,
+  Text,
+  VStack,
+} from '@chakra-ui/react'
+import {
+  useAddUserImageMutation,
+  useRemoveUserImageMutation,
+} from 'generated/generated-graphql'
+import { useUploadImage } from 'hooks/useUploadImage'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { ImageUploader } from 'components/ImageUploader'
 import { useAuth } from 'providers/UserProvider'
 
 const ProfilePicture: NextPage = () => {
-  const { isLoading } = useAuth()
+  const { isLoading, refetchAndSetUserData, userData } = useAuth()
   const [fileToPreview, setFileToPreview] = useState<
     (File & { preview: string }) | undefined
   >(undefined)
+  const { isUploading, uploadImage } = useUploadImage()
+
+  const [addUserImage, { loading: isAddUserImageLoading }] =
+    useAddUserImageMutation()
+  const [removeUserImage, { loading: isRemoveUserImageLoading }] =
+    useRemoveUserImageMutation()
 
   if (isLoading) {
     return <Spinner />
@@ -32,14 +53,77 @@ const ProfilePicture: NextPage = () => {
         <Flex direction="column" gap="24px">
           <Flex direction="column" align="center" gap="24px">
             <Text fontSize="3xl" fontWeight="bold">
-              Add New Profile Picture
+              Profile Picture
             </Text>
-            <Avatar src={fileToPreview?.preview} h="250px" w="250px" />
-            <Button isDisabled={!fileToPreview} colorScheme="green">
-              Save New Profile Picture
-            </Button>
+            <HStack spacing="32px">
+              <VStack>
+                <Text fontSize="xl" fontWeight="semibold">
+                  Current Profile Picture
+                </Text>
+                <Avatar
+                  src={userData?.imageUrl ?? undefined}
+                  h="200px"
+                  w="200px"
+                />
+                <Button
+                  isDisabled={!userData?.imageUrl}
+                  colorScheme="red"
+                  isLoading={isRemoveUserImageLoading || isUploading}
+                  onClick={async () => {
+                    await removeUserImage({
+                      onCompleted: async () => {
+                        await refetchAndSetUserData()
+                      },
+                    })
+                  }}
+                >
+                  Remove Current Profile Picture
+                </Button>
+              </VStack>
+              <VStack>
+                <Text fontSize="xl" fontWeight="semibold">
+                  New Profile Picture
+                </Text>
+                <HStack align="start" spacing="0">
+                  <Avatar src={fileToPreview?.preview} h="200px" w="200px" />
+                  {fileToPreview && (
+                    <IconButton
+                      aria-label="close"
+                      rounded="full"
+                      m="0"
+                      icon={<RiCloseFill size="30px" />}
+                      onClick={() => {
+                        setFileToPreview(undefined)
+                      }}
+                    />
+                  )}
+                </HStack>
+                <Button
+                  isDisabled={!fileToPreview}
+                  colorScheme="green"
+                  isLoading={isAddUserImageLoading || isUploading}
+                  onClick={async () => {
+                    const { imageBucketKey } = await uploadImage(fileToPreview!)
+                    await addUserImage({
+                      variables: {
+                        input: {
+                          bucketKey: imageBucketKey,
+                        },
+                      },
+                      onCompleted: async () => {
+                        setFileToPreview(undefined)
+                        await refetchAndSetUserData()
+                      },
+                    })
+                  }}
+                >
+                  Save New Profile Picture
+                </Button>
+              </VStack>
+            </HStack>
           </Flex>
           <ImageUploader
+            isDisabled={isUploading}
             onSuccess={(file) => {
               setFileToPreview(
                 Object.assign(file, {
