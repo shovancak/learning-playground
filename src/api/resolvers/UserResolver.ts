@@ -1,5 +1,9 @@
 import { AuthGraphqlContext } from 'api'
-import { MutationSignUpArgs, Resolvers } from 'api/generated/resolvers-types'
+import {
+  MutationAddUserImageArgs,
+  MutationSignUpArgs,
+  Resolvers,
+} from 'api/generated/resolvers-types'
 import { UserService } from 'api/services'
 
 const UserResolver: Resolvers = {
@@ -12,6 +16,12 @@ const UserResolver: Resolvers = {
   },
   Mutation: {
     signUp: (_, { input }: MutationSignUpArgs) => UserService.signUp(input),
+    addUserImage: (
+      _,
+      { input: { bucketKey } }: MutationAddUserImageArgs,
+      { user }: AuthGraphqlContext
+    ) =>
+      UserService.addUserImage({ imageBucketKey: bucketKey, userId: user.id }),
   },
 }
 
