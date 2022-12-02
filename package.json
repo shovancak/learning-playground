@@ -12,7 +12,8 @@
     "graphql:generate-types-fe": "graphql-codegen --config codegen-fe.yml -r dotenv/config",
     "typecheck": "tsc --noEmit",
     "eslint": "eslint --ext .js,.jsx,.ts,.tsx .",
-    "db-seed": "npx prisma db seed"
+    "db-seed": "npx prisma db seed",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@apollo/client": "3.5.10",
