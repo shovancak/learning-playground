@@ -10,15 +10,13 @@ phases:
     runtime-versions:
       nodejs: 14
     commands:
-      - echo Not installing anything else
+      - echo Installing NPM dependencies
+      - npm install
   build:
     commands:
       - echo Build started on `date`
       - echo Node js version
       - node -v
-      - npm install -g typescript
-      - echo Installing NPM dependencies
-      - npm install
       - echo Building Next.js app...
       - npm run build
       - mv .next . && mv public .
