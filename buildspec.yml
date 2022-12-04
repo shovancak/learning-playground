@@ -16,6 +16,7 @@ phases:
       - echo Build started on `date`
       - echo Node js version
       - node -v
+      - npm install -g typescript
       - echo Installing NPM dependencies
       - npm install
       - echo Building Next.js app...
