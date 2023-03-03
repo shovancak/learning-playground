@@ -8,9 +8,6 @@ services:
     buildCommand: npm install; npx prisma migrate deploy; npm run build
     startCommand: npm run start
     envVars:
-      - key: NODE_ENV
-        value: production
-
       - key: API_URL
         sync: false
 
