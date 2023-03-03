@@ -13,6 +13,10 @@ services:
       - key: API_URL
         sync: false
 
+      - key: DB_HOST
+        fromDatabase:
+          name: learning-playground-db
+          property: host
       - key: DB_NAME
         fromDatabase:
           name: learning-playground-db
