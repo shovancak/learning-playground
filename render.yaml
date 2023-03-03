@@ -1,0 +1,62 @@
+services:
+  - type: web
+    name: learning-playground
+    env: node
+    repo: https://github.com/shovancak/learning-playground.git
+    branch: main
+    buildCommand: npm run install; npx prisma migrate deploy; npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+
+      - key: API_URL
+        sync: false
+
+      - key: DB_NAME
+        fromDatabase:
+          name: learning-playground-db
+          property: database
+      - key: DB_PORT
+        fromDatabase:
+          name: learning-playground-db
+          property: port
+      - key: DB_USER
+        fromDatabase:
+          name: learning-playground-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: learning-playground-db
+          property: password
+      - key: DB_URL
+        fromDatabase:
+          name: learning-playground-db
+          property: connectionString
+
+      - key: NEXT_PUBLIC_FIREBASE_API_KEY
+        sync: false
+      - key: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+        sync: false
+      - key: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+        sync: false
+      - key: FIREBASE_PRIVATE_KEY
+        sync: false
+      - key: FIREBASE_CLIENT_EMAIL
+        sync: false
+
+      - key: AWS_REGION
+        value: eu-central-1
+      - key: AWS_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_SECRET_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_S3_API_VERSION
+        value: 2006-03-01
+      - key: AWS_S3_PRIVATE_BUCKET_NAME
+        sync: false
+
+databases:
+  - name: learning-playground-db
+    region: frankfurt
+    plan: free
