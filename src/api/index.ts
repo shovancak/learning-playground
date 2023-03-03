@@ -25,7 +25,7 @@ export interface AuthGraphqlContext extends RequestContext {
 const ApolloServer = new ApolloServerClass({
   schema: GraphQLSchema,
   plugins: [
-    process.env.NEXT_PUBLIC_NODE_ENV === 'production'
+    process.env.NODE_ENV === 'production'
       ? ApolloServerPluginLandingPageDisabled()
       : ApolloServerPluginLandingPageGraphQLPlayground(),
   ],
