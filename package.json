@@ -13,7 +13,7 @@
     "typecheck": "tsc --noEmit",
     "eslint": "eslint --ext .js,.jsx,.ts,.tsx .",
     "db-seed": "npx prisma db seed",
-    "postinstall": "prisma generate"
+    "postinstall": "npx prisma generate"
   },
   "dependencies": {
     "@apollo/client": "3.5.10",
