@@ -2,6 +2,7 @@ services:
   - type: web
     name: learning-playground
     env: node
+    region: frankfurt
     repo: https://github.com/shovancak/learning-playground.git
     branch: main
     buildCommand: npm install; npx prisma migrate deploy; npm run build
