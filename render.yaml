@@ -15,27 +15,27 @@ services:
 
       - key: DB_HOST
         fromDatabase:
-          name: learning-playground-db
+          name: db
           property: host
       - key: DB_NAME
         fromDatabase:
-          name: learning-playground-db
+          name: db
           property: database
       - key: DB_PORT
         fromDatabase:
-          name: learning-playground-db
+          name: db
           property: port
       - key: DB_USER
         fromDatabase:
-          name: learning-playground-db
+          name: db
           property: user
       - key: DB_PASSWORD
         fromDatabase:
-          name: learning-playground-db
+          name: db
           property: password
       - key: DB_URL
         fromDatabase:
-          name: learning-playground-db
+          name: db
           property: connectionString
 
       - key: NEXT_PUBLIC_FIREBASE_API_KEY
@@ -61,6 +61,6 @@ services:
         sync: false
 
 databases:
-  - name: learning-playground-db
+  - name: db
     region: frankfurt
     plan: free
