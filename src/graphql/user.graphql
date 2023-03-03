@@ -3,10 +3,11 @@ fragment UserInfo on User {
   firebaseId
   name
   email
-  imageUrl
+  imageBucketKey
   role
   createdAt
   updatedAt
+  imageUrl
 }
 
 query Me {
@@ -17,6 +18,18 @@ query Me {
 
 mutation SignUp($input: SignUpInput!) {
   signUp(input: $input) {
+    ...UserInfo
+  }
+}
+
+mutation AddUserImage($input: AddUserImageInput!) {
+  addUserImage(input: $input) {
+    ...UserInfo
+  }
+}
+
+mutation RemoveUserImage {
+  removeUserImage {
     ...UserInfo
   }
 }

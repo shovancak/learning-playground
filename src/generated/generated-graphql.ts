@@ -16,9 +16,27 @@ export type Scalars = {
   Date: string;
 };
 
+export type AddUserImageInput = {
+  bucketKey: Scalars['String'];
+};
+
+export type ImageUploadUrl = {
+  __typename?: 'ImageUploadUrl';
+  bucketKey: Scalars['String'];
+  signedUploadUrl: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
+  addUserImage: User;
+  generateUploadUrl: ImageUploadUrl;
+  removeUserImage: User;
   signUp: User;
+};
+
+
+export type MutationAddUserImageArgs = {
+  input: AddUserImageInput;
 };
 
 
@@ -29,6 +47,10 @@ export type MutationSignUpArgs = {
 export type Query = {
   __typename?: 'Query';
   me: User;
+};
+
+export type RemoveUserImageInput = {
+  bucketKey: Scalars['String'];
 };
 
 export enum Role {
@@ -50,25 +72,43 @@ export type User = {
   email: Scalars['String'];
   firebaseId: Scalars['String'];
   id: Scalars['ID'];
+  imageBucketKey?: Maybe<Scalars['String']>;
   imageUrl?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   role: Role;
   updatedAt?: Maybe<Scalars['Date']>;
 };
 
-export type UserInfoFragment = { __typename?: 'User', id: string, firebaseId: string, name: string, email: string, imageUrl?: string | null, role: Role, createdAt: string, updatedAt?: string | null };
+export type GenerateUploadUrlMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GenerateUploadUrlMutation = { __typename?: 'Mutation', generateUploadUrl: { __typename?: 'ImageUploadUrl', signedUploadUrl: string, bucketKey: string } };
+
+export type UserInfoFragment = { __typename?: 'User', id: string, firebaseId: string, name: string, email: string, imageBucketKey?: string | null, role: Role, createdAt: string, updatedAt?: string | null, imageUrl?: string | null };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, firebaseId: string, name: string, email: string, imageUrl?: string | null, role: Role, createdAt: string, updatedAt?: string | null } };
+export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, firebaseId: string, name: string, email: string, imageBucketKey?: string | null, role: Role, createdAt: string, updatedAt?: string | null, imageUrl?: string | null } };
 
 export type SignUpMutationVariables = Exact<{
   input: SignUpInput;
 }>;
 
 
-export type SignUpMutation = { __typename?: 'Mutation', signUp: { __typename?: 'User', id: string, firebaseId: string, name: string, email: string, imageUrl?: string | null, role: Role, createdAt: string, updatedAt?: string | null } };
+export type SignUpMutation = { __typename?: 'Mutation', signUp: { __typename?: 'User', id: string, firebaseId: string, name: string, email: string, imageBucketKey?: string | null, role: Role, createdAt: string, updatedAt?: string | null, imageUrl?: string | null } };
+
+export type AddUserImageMutationVariables = Exact<{
+  input: AddUserImageInput;
+}>;
+
+
+export type AddUserImageMutation = { __typename?: 'Mutation', addUserImage: { __typename?: 'User', id: string, firebaseId: string, name: string, email: string, imageBucketKey?: string | null, role: Role, createdAt: string, updatedAt?: string | null, imageUrl?: string | null } };
+
+export type RemoveUserImageMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type RemoveUserImageMutation = { __typename?: 'Mutation', removeUserImage: { __typename?: 'User', id: string, firebaseId: string, name: string, email: string, imageBucketKey?: string | null, role: Role, createdAt: string, updatedAt?: string | null, imageUrl?: string | null } };
 
 export const UserInfoFragmentDoc = gql`
     fragment UserInfo on User {
@@ -76,12 +116,46 @@ export const UserInfoFragmentDoc = gql`
   firebaseId
   name
   email
-  imageUrl
+  imageBucketKey
   role
   createdAt
   updatedAt
+  imageUrl
 }
     `;
+export const GenerateUploadUrlDocument = gql`
+    mutation GenerateUploadUrl {
+  generateUploadUrl {
+    signedUploadUrl
+    bucketKey
+  }
+}
+    `;
+export type GenerateUploadUrlMutationFn = Apollo.MutationFunction<GenerateUploadUrlMutation, GenerateUploadUrlMutationVariables>;
+
+/**
+ * __useGenerateUploadUrlMutation__
+ *
+ * To run a mutation, you first call `useGenerateUploadUrlMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useGenerateUploadUrlMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [generateUploadUrlMutation, { data, loading, error }] = useGenerateUploadUrlMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGenerateUploadUrlMutation(baseOptions?: Apollo.MutationHookOptions<GenerateUploadUrlMutation, GenerateUploadUrlMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<GenerateUploadUrlMutation, GenerateUploadUrlMutationVariables>(GenerateUploadUrlDocument, options);
+      }
+export type GenerateUploadUrlMutationHookResult = ReturnType<typeof useGenerateUploadUrlMutation>;
+export type GenerateUploadUrlMutationResult = Apollo.MutationResult<GenerateUploadUrlMutation>;
+export type GenerateUploadUrlMutationOptions = Apollo.BaseMutationOptions<GenerateUploadUrlMutation, GenerateUploadUrlMutationVariables>;
 export const MeDocument = gql`
     query Me {
   me {
@@ -149,3 +223,68 @@ export function useSignUpMutation(baseOptions?: Apollo.MutationHookOptions<SignU
 export type SignUpMutationHookResult = ReturnType<typeof useSignUpMutation>;
 export type SignUpMutationResult = Apollo.MutationResult<SignUpMutation>;
 export type SignUpMutationOptions = Apollo.BaseMutationOptions<SignUpMutation, SignUpMutationVariables>;
+export const AddUserImageDocument = gql`
+    mutation AddUserImage($input: AddUserImageInput!) {
+  addUserImage(input: $input) {
+    ...UserInfo
+  }
+}
+    ${UserInfoFragmentDoc}`;
+export type AddUserImageMutationFn = Apollo.MutationFunction<AddUserImageMutation, AddUserImageMutationVariables>;
+
+/**
+ * __useAddUserImageMutation__
+ *
+ * To run a mutation, you first call `useAddUserImageMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddUserImageMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addUserImageMutation, { data, loading, error }] = useAddUserImageMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAddUserImageMutation(baseOptions?: Apollo.MutationHookOptions<AddUserImageMutation, AddUserImageMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddUserImageMutation, AddUserImageMutationVariables>(AddUserImageDocument, options);
+      }
+export type AddUserImageMutationHookResult = ReturnType<typeof useAddUserImageMutation>;
+export type AddUserImageMutationResult = Apollo.MutationResult<AddUserImageMutation>;
+export type AddUserImageMutationOptions = Apollo.BaseMutationOptions<AddUserImageMutation, AddUserImageMutationVariables>;
+export const RemoveUserImageDocument = gql`
+    mutation RemoveUserImage {
+  removeUserImage {
+    ...UserInfo
+  }
+}
+    ${UserInfoFragmentDoc}`;
+export type RemoveUserImageMutationFn = Apollo.MutationFunction<RemoveUserImageMutation, RemoveUserImageMutationVariables>;
+
+/**
+ * __useRemoveUserImageMutation__
+ *
+ * To run a mutation, you first call `useRemoveUserImageMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveUserImageMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeUserImageMutation, { data, loading, error }] = useRemoveUserImageMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useRemoveUserImageMutation(baseOptions?: Apollo.MutationHookOptions<RemoveUserImageMutation, RemoveUserImageMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RemoveUserImageMutation, RemoveUserImageMutationVariables>(RemoveUserImageDocument, options);
+      }
+export type RemoveUserImageMutationHookResult = ReturnType<typeof useRemoveUserImageMutation>;
+export type RemoveUserImageMutationResult = Apollo.MutationResult<RemoveUserImageMutation>;
+export type RemoveUserImageMutationOptions = Apollo.BaseMutationOptions<RemoveUserImageMutation, RemoveUserImageMutationVariables>;

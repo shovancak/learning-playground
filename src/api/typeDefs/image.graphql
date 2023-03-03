@@ -1,0 +1,8 @@
+type ImageUploadUrl {
+  signedUploadUrl: String!
+  bucketKey: String!
+}
+
+type Mutation {
+  generateUploadUrl: ImageUploadUrl!
+}

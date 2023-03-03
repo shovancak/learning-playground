@@ -30,6 +30,7 @@ const ApolloServer = new ApolloServerClass({
       : ApolloServerPluginLandingPageGraphQLPlayground(),
   ],
   formatError: (error) => {
+    console.error(error)
     if (!(error.originalError instanceof ApolloError)) {
       return new Error('Something went wrong.')
     }

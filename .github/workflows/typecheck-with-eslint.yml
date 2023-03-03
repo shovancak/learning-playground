@@ -1,40 +1,25 @@
 name: Run tsc with eslint on all files
 
+run-name: ${{ github.actor }} is running this job
+
 on:
   push:
-    # ignore changes in documentation files
-    paths-ignore:
-      - '*.md'
+    branches:
+      - main
+      - production
+  pull_request:
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    container: ubuntu
-    # Service containers
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: '16.14.2'
 
-      - name: Cache node modules
-        uses: actions/cache@v2
-        id: next-modules
-        env:
-          cache-name: cache-node-modules
-        with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: |
-            ~/.npm
-            ~/.cache
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Run tsc
         run: npm run typecheck
