@@ -12,6 +12,9 @@ const LandingPage: NextPage = () => {
       <Head>
         <title>Learning playground</title>
       </Head>
+      <h1 className="text-3xl font-bold underline">
+        This is my first h1 styled by Tailwind!
+      </h1>
       <Flex
         direction="column"
         align="center"

@@ -5,6 +5,11 @@
     "@sudolabs-io/eslint-config-sudolabs/with/prettier",
     "@sudolabs-io/eslint-config-sudolabs/with/lodash"
   ],
+  "ignorePatterns": [
+    "next.config.js",
+    "postcss.config.js",
+    "tailwind.config.js"
+  ],
   "rules": {
     "@typescript-eslint/no-misused-promises": [
       "error",

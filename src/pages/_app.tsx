@@ -2,6 +2,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 import type { AppProps } from 'next/app'
 import ApolloProvider from 'providers/ApolloProvider'
 import UserAuthProvider from 'providers/UserProvider'
+import 'styles/global.css'
 
 const MyApp = ({ Component, pageProps }: AppProps) => (
   <ApolloProvider>
