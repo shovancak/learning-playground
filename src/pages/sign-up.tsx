@@ -130,13 +130,7 @@ const SignUp: NextPage = () => {
                 </VStack>
                 <VStack w="full" align="start" spacing={0}>
                   <FormLabel htmlFor="role">User Role</FormLabel>
-                  <FormSelect id="role" placeholder="Choose your role">
-                    {roleOptions.map(({ label, value }) => (
-                      <option key={value} value={value}>
-                        {label}
-                      </option>
-                    ))}
-                  </FormSelect>
+                  <FormSelect id="role" name="userRole" options={roleOptions} />
                 </VStack>
               </VStack>
               <HStack w="full" mt="40px" spacing="4">
