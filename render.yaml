@@ -9,7 +9,7 @@ services:
     envVars:
       - key: DB_HOST
         fromDatabase:
-          name: learning-playground-db
+          name: learning-playground-db-main
           property: host
       - key: DB_NAME
         fromDatabase:
