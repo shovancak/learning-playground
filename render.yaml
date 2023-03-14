@@ -4,7 +4,6 @@ services:
     env: node
     region: frankfurt
     repo: https://github.com/shovancak/learning-playground.git
-    branch: main
     buildCommand: npm install && npx prisma migrate deploy && npm run build
     startCommand: npm run start
     envVars:
