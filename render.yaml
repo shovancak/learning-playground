@@ -7,9 +7,6 @@ services:
     buildCommand: npm install && npx prisma migrate deploy && npm run build
     startCommand: npm run start
     envVars:
-      - key: API_URL
-        sync: false
-
       - key: DB_HOST
         fromDatabase:
           name: learning-playground-db
@@ -35,27 +32,7 @@ services:
           name: learning-playground-db-main
           property: connectionString
 
-      - key: NEXT_PUBLIC_FIREBASE_API_KEY
-        sync: false
-      - key: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
-        sync: false
-      - key: NEXT_PUBLIC_FIREBASE_PROJECT_ID
-        sync: false
-      - key: FIREBASE_PRIVATE_KEY
-        sync: false
-      - key: FIREBASE_CLIENT_EMAIL
-        sync: false
-
-      - key: AWS_REGION
-        value: eu-central-1
-      - key: AWS_ACCESS_KEY_ID
-        sync: false
-      - key: AWS_SECRET_ACCESS_KEY_ID
-        sync: false
-      - key: AWS_S3_API_VERSION
-        value: 2006-03-01
-      - key: AWS_S3_PRIVATE_BUCKET_NAME
-        sync: false
+      - fromGroup: learning-playground-main-environment-group
 
 - type: web
     name: learning-playground-production
@@ -65,9 +42,6 @@ services:
     buildCommand: npm install && npx prisma migrate deploy && npm run build
     startCommand: npm run start
     envVars:
-      - key: API_URL
-        sync: false
-
       - key: DB_HOST
         fromDatabase:
           name: learning-playground-db-production
@@ -93,6 +67,14 @@ services:
           name: learning-playground-db-production
           property: connectionString
 
+      - fromGroup: learning-playground-production-environment-group
+
+envVarGroups:
+  - name: learning-playground-main-environment-group
+    envVars:
+    - key: API_URL
+        sync: false
+
       - key: NEXT_PUBLIC_FIREBASE_API_KEY
         sync: false
       - key: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
@@ -114,6 +96,34 @@ services:
         value: 2006-03-01
       - key: AWS_S3_PRIVATE_BUCKET_NAME
         sync: false
+
+  - name: learning-playground-production-environment-group
+    envVars:
+    - key: API_URL
+        sync: false
+
+      - key: NEXT_PUBLIC_FIREBASE_API_KEY
+        sync: false
+      - key: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+        sync: false
+      - key: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+        sync: false
+      - key: FIREBASE_PRIVATE_KEY
+        sync: false
+      - key: FIREBASE_CLIENT_EMAIL
+        sync: false
+
+      - key: AWS_REGION
+        value: eu-central-1
+      - key: AWS_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_SECRET_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_S3_API_VERSION
+        value: 2006-03-01
+      - key: AWS_S3_PRIVATE_BUCKET_NAME
+        sync: false
+
 databases:
   - name: learning-playground-db-main
     region: frankfurt
