@@ -65,6 +65,13 @@ services:
           name: learning-playground-db-production
           property: connectionString
       - fromGroup: learning-playground-production-environment-group
+databases:
+  - name: learning-playground-db-main
+    region: frankfurt
+    plan: free
+  - name: learning-playground-db-production
+    region: frankfurt
+    plan: free
 envVarGroups:
   - name: learning-playground-main-environment-group
     envVars:
@@ -114,10 +121,3 @@ envVarGroups:
         value: 2006-03-01
       - key: AWS_S3_PRIVATE_BUCKET_NAME
         sync: false
-databases:
-  - name: learning-playground-db-main
-    region: frankfurt
-    plan: free
-  - name: learning-playground-db-production
-    region: frankfurt
-    plan: free
