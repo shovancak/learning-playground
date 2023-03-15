@@ -54,59 +54,59 @@ services:
           name: learning-playground-db-main
           property: connectionString
   - type: web
-      name: learning-playground-production
-      env: node
-      region: frankfurt
-      repo: https://github.com/shovancak/learning-playground.git
-      buildCommand: npm install && npx prisma migrate deploy && npm run build
-      startCommand: npm run start
-      envVars:
-        - key: API_URL
-          sync: false
-        - key: NEXT_PUBLIC_FIREBASE_API_KEY
-          sync: false
-        - key: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
-          sync: false
-        - key: NEXT_PUBLIC_FIREBASE_PROJECT_ID
-          sync: false
-        - key: FIREBASE_PRIVATE_KEY
-          sync: false
-        - key: FIREBASE_CLIENT_EMAIL
-          sync: false
-        - key: AWS_REGION
-          value: eu-central-1
-        - key: AWS_ACCESS_KEY_ID
-          sync: false
-        - key: AWS_SECRET_ACCESS_KEY_ID
-          sync: false
-        - key: AWS_S3_API_VERSION
-          value: 2006-03-01
-        - key: AWS_S3_PRIVATE_BUCKET_NAME
-          sync: false
-        - key: DB_HOST
-          fromDatabase:
-            name: learning-playground-db-production
-            property: host
-        - key: DB_NAME
-          fromDatabase:
-            name: learning-playground-db-production
-            property: database
-        - key: DB_PORT
-          fromDatabase:
-            name: learning-playground-db-production
-            property: port
-        - key: DB_USER
-          fromDatabase:
-            name: learning-playground-db-production
-            property: user
-        - key: DB_PASSWORD
-          fromDatabase:
-            name: learning-playground-db-production
-            property: password
-        - key: DB_URL
-          fromDatabase:
-            name: learning-playground-db-production
-            property: connectionString
+    name: learning-playground-production
+    env: node
+    region: frankfurt
+    repo: https://github.com/shovancak/learning-playground.git
+    buildCommand: npm install && npx prisma migrate deploy && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: API_URL
+        sync: false
+      - key: NEXT_PUBLIC_FIREBASE_API_KEY
+        sync: false
+      - key: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+        sync: false
+      - key: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+        sync: false
+      - key: FIREBASE_PRIVATE_KEY
+        sync: false
+      - key: FIREBASE_CLIENT_EMAIL
+        sync: false
+      - key: AWS_REGION
+        value: eu-central-1
+      - key: AWS_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_SECRET_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_S3_API_VERSION
+        value: 2006-03-01
+      - key: AWS_S3_PRIVATE_BUCKET_NAME
+        sync: false
+      - key: DB_HOST
+        fromDatabase:
+          name: learning-playground-db-production
+          property: host
+      - key: DB_NAME
+        fromDatabase:
+          name: learning-playground-db-production
+          property: database
+      - key: DB_PORT
+        fromDatabase:
+          name: learning-playground-db-production
+          property: port
+      - key: DB_USER
+        fromDatabase:
+          name: learning-playground-db-production
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: learning-playground-db-production
+          property: password
+      - key: DB_URL
+        fromDatabase:
+          name: learning-playground-db-production
+          property: connectionString
 databases:
   - name: learning-playground-db-main
     region: frankfurt
